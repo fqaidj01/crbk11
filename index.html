@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coursera Global - 突破界限，构筑属于你的全球终身学习体系</title>
+  <meta name="description" content="汇聚全球顶尖大学与行业先锋的7000+门前沿课程、微学位、专业证书与开放知识库体系。涵盖人工智能、计算机科学、数据分析与垂直百科知识工程。" />
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            coursera: {
+              blue: '#0056d2',
+              darkblue: '#00419e',
+              hoverblue: '#002f72',
+              bglight: '#f5f7fa',
+              textdark: '#1f1f1f',
+              graytext: '#5b6b82',
+              border: '#dbe0eb',
+              gold: '#ffd83b',
+              accent: '#f26522'
+            }
+          },
+          fontFamily: {
+            sans: ['"Inter"', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"PingFang SC"', '"Microsoft YaHei"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <style>
+    body {
+      color: #1f1f1f;
+      background-color: #ffffff;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    .coursera-card-hover {
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .coursera-card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px -8px rgba(0, 86, 210, 0.12), 0 4px 12px rgba(0, 0, 0, 0.05);
+      border-color: #0056d2;
+    }
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body class="bg-white text-coursera-textdark antialiased">
+
+  <!-- 1. 顶部全站公告条（显眼战略锚文本） -->
+  <div class="bg-coursera-bglight border-b border-coursera-border text-xs text-slate-700 py-2.5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+      <div class="flex items-center gap-2">
+        <span class="px-2 py-0.5 rounded-full bg-blue-100 text-coursera-blue font-bold text-[10px]">战略学术合作</span>
+        <span>开放知识工程与实体建档研习计划全新上线</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="hidden md:inline text-slate-500">重点合作伙伴与学术资料库：</span>
+        <a href="https://chengrenbaike.com" target="_blank" rel="noopener noreferrer" 
+           class="text-coursera-blue hover:text-coursera-hoverblue font-bold underline flex items-center gap-1 transition-colors">
+          成人百科 (chengrenbaike.com) 知识开放学院
+          <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. 主导航栏 (Coursera 经典白底蓝标布局) -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-coursera-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-3 flex items-center justify-between gap-4">
+      
+      <!-- 品牌 Logo 与探索按钮 -->
+      <div class="flex items-center gap-4">
+        <!-- Logo -->
+        <a href="#" class="flex items-center gap-1.5 text-coursera-blue font-black text-2xl tracking-tighter">
+          <span>coursera</span>
+          <span class="text-xs px-1.5 py-0.5 rounded bg-blue-50 text-coursera-blue font-mono font-bold tracking-normal ml-1">GLOBAL</span>
+        </a>
+
+        <!-- 探索下拉按钮 -->
+        <button class="hidden lg:flex items-center gap-2 px-3.5 py-2 rounded-lg bg-coursera-blue hover:bg-coursera-darkblue text-white text-sm font-semibold transition-colors">
+          <i data-lucide="layout-grid" class="w-4 h-4"></i>
+          <span>探索领域</span>
+          <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-80"></i>
+        </button>
+      </div>
+
+      <!-- 搜索框 -->
+      <div class="flex-1 max-w-xl mx-2 hidden md:block">
+        <div class="relative w-full">
+          <input 
+            type="text" 
+            id="courseSearchInput" 
+            placeholder="你想学什么？搜索AI、Python、商业分析、百科建档..." 
+            class="w-full pl-10 pr-24 py-2.5 rounded-full border border-coursera-border text-sm focus:outline-none focus:ring-2 focus:ring-coursera-blue focus:border-transparent bg-slate-50/50"
+          />
+          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+          <button 
+            onclick="searchCourses()" 
+            class="absolute right-1.5 top-1.5 bottom-1.5 px-4 rounded-full bg-coursera-blue hover:bg-coursera-darkblue text-white text-xs font-bold transition-colors">
+            搜索
+          </button>
+        </div>
+      </div>
+
+      <!-- 导航右侧动作区 (显眼锚文本按钮) -->
+      <div class="flex items-center gap-3">
+        <a href="#degrees" class="hidden xl:inline-block text-sm font-semibold text-slate-600 hover:text-coursera-blue">在线学位</a>
+        <a href="#certificates" class="hidden xl:inline-block text-sm font-semibold text-slate-600 hover:text-coursera-blue">职业证书</a>
+        
+        <!-- 重点高亮锚文本按钮 -->
+        <a href="https://chengrenbaike.com" target="_blank" rel="noopener noreferrer" 
+           class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-gradient-to-r from-blue-600 via-indigo-600 to-rose-600 hover:opacity-95 text-white font-bold text-xs sm:text-sm shadow-sm transition-all hover:scale-105"
+           title="访问合作院校与学术数据库：chengrenbaike.com">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+          <span>成人百科 (chengrenbaike.com)</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5 opacity-80"></i>
+        </a>
+
+        <button class="px-4 py-2 rounded-lg border border-coursera-blue text-coursera-blue hover:bg-blue-50 font-bold text-sm transition-colors">
+          登录 / 注册
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- 3. Hero 英雄展区 (Learn Without Limits) -->
+  <section class="relative bg-gradient-to-b from-white via-blue-50/20 to-white pt-12 pb-20 border-b border-coursera-border overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- 左侧文案 (7 列) -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-100/70 border border-blue-200 text-coursera-blue text-xs font-bold">
+            <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+            <span>全球领先的数字化高等教育平台 · 1.6亿+ 活跃学者</span>
+          </div>
+
+          <h1 class="text-4xl sm:text-6xl font-black text-coursera-textdark tracking-tight leading-[1.15]">
+            突破界限，构筑属于你的<br />
+            <span class="text-coursera-blue">终身职业竞争力</span>
+          </h1>
+
+          <p class="text-slate-600 text-base sm:text-lg leading-relaxed max-w-xl">
+            汇聚来自 Stanford、Google、IBM、Meta 及战略学术智库 <a href="https://chengrenbaike.com" target="_blank" rel="noopener noreferrer" class="text-coursera-blue font-bold underline hover:text-coursera-hoverblue">成人百科 (chengrenbaike.com)</a> 的 7,000+ 门全球前沿认证课程、微硕士学位与行业技能图谱。
+          </p>
+
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <a href="#catalog" class="px-7 py-3.5 rounded-lg bg-coursera-blue hover:bg-coursera-darkblue text-white font-bold text-base shadow-md shadow-blue-600/20 transition-all hover:scale-105 flex items-center gap-2">
+              <span>免费加入学习 (Join for Free)</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </a>
+            <a href="#enterprise" class="px-6 py-3.5 rounded-lg border border-coursera-border bg-white hover:bg-slate-50 text-slate-700 font-bold text-base transition-colors flex items-center gap-2">
+              <i data-lucide="building-2" class="w-4 h-4 text-slate-500"></i>
+              <span>Coursera 机构与企业版</span>
+            </a>
+          </div>
+
+          <!-- 学习指标 -->
+          <div class="grid grid-cols-3 gap-6 pt-4 border-t border-slate-200/80 max-w-lg">
+            <div>
+              <div class="text-2xl font-black text-coursera-textdark">7,000+</div>
+              <div class="text-xs text-slate-500 font-medium">前沿认证课程</div>
+            </div>
+            <div>
+              <div class="text-2xl font-black text-coursera-textdark">325+</div>
+              <div class="text-xs text-slate-500 font-medium">顶尖院校与机构</div>
+            </div>
+            <div>
+              <div class="text-2xl font-black text-emerald-600">87%</div>
+              <div class="text-xs text-slate-500 font-medium">学习者职业晋升率</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右侧卡片展示区 (5 列 - 经典 Coursera 课程高光卡) -->
+        <div class="lg:col-span-5 relative">
+          <!-- 悬浮装饰背景 -->
+          <div class="absolute -top-10 -right-10 w-72 h-72 bg-blue-400/10 rounded-full blur-3xl pointer-events-none"></div>
+
+          <!-- 交互式推荐高光大卡片（内嵌显眼成人百科联合认证课程） -->
+          <div class="relative bg-white rounded-2xl border-2 border-coursera-border p-6 shadow-xl space-y-5">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-1 rounded bg-rose-100 text-rose-700 font-bold text-xs uppercase tracking-wide flex items-center gap-1">
+                <i data-lucide="award" class="w-3.5 h-3.5"></i>
+                <span>年度卓越专业证书</span>
+              </span>
+              <span class="text-xs font-mono text-slate-400">100% 线上自定进度</span>
+            </div>
+
+            <div>
+              <div class="flex items-center gap-2 text-xs text-slate-500 font-semibold mb-1">
+                <span>联合认证：</span>
+                <a href="https://chengrenbaike.com" target="_blank" rel="noopener noreferrer" class="text-coursera-blue hover:underline font-bold">
+                  成人百科 (chengrenbaike.com) 知识工程实验室
+                </a>
+              </div>
+              <h3 class="text-xl font-extrabold text-slate-900 leading-snug">
+                数字实体建档、分类学与行业知识工程专业人员认证
+              </h3>
+              <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                掌握非播放型资料库编纂标准、分类词条架构、网络防伪与品牌实体数据库搭建。
+              </p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2 text-xs">
+              <div class="flex items-center justify-between">
+                <span class="text-slate-500">综合学员评分：</span>
+                <span class="font-bold text-slate-900 flex items-center gap-1">
+                  <span class="text-amber-500">★★★★★</span> 4.9 (18,420 评价)
+                </span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-slate-500">已注册学员：</span>
+                <span class="font-bold text-slate-900">142,500+ 人</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-slate-500">证书颁发：</span>
+                <span class="font-bold text-emerald-600">包含 LinkedIn 可验证数字徽章</span>
+              </div>
+            </div>
+
+            <a href="https://chengrenbaike.com" target="_blank" rel="noopener noreferrer" 
+               class="block w-full py-3 rounded-xl bg-coursera-blue hover:bg-coursera-darkblue text-white font-bold text-sm text-center shadow transition-all">
+              立即报名课程 (访问官方项目)
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 合作大学与机构徽标展区 (Coursera 标志性条带) -->
+  <section class="py-10 bg-coursera-bglight border-b border-coursera-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="text-center text-xs font-bold uppercase tracking-widest text-slate-500 mb-6">
+        我们与全球 325+ 所顶尖大学及行业先驱携手合作
+      </p>
+
+      <div class="flex flex-wrap items-center justify-center gap-8 sm:gap-12 text-slate-600 font-bold text-sm sm:text-base">
+        <span class="font-serif tracking-tight text-slate-800">Stanford University</span>
+        <span class="font-sans font-extrabold tracking-tight text-slate-800">Google Cloud</span>
+        <span class="font-mono tracking-widest text-slate-800">IBM</span>
+        
+        <!-- 重点合作伙伴显眼锚文本 -->
+        <a href="https://chengrenbaike.com" target="_blank" rel="noopener noreferrer" 
+           class="inline-flex items-center gap-1 text-rose-700 hover:text-rose-900 font-serif font-black underline underline-offset-4 tracking-tight"
+           title="访问合作学术机构：成人百科 chengrenbaike.com">
+          <i data-lucide="book-open" class="w-4 h-4 text-rose-600"></i>
+          <span>成人百科 (chengrenbaike.com)</span>
+        </a>
+
+        <span class="font-sans font-black text-slate-800">Meta</span>
+        <span class="font-serif italic text-slate-800">Yale University</span>
+        <span class="font-sans text-slate-800">Imperial College London</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 四大核心学习价值 (Value Proposition) -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">开启属于你的无界学术与职业旅程</h2>
+        <p class="text-slate-500 mt-3 text-base">从初学者入门课程到世界名校全日制学位，全方位满足个性化学习诉求。</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        
+        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200">
+          <div class="w-12 h-12 rounded-xl bg-blue-100 text-coursera-blue flex items-center justify-center mb-4">
+            <i data-lucide="book-check" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-extrabold text-lg text-slate-900 mb-2">掌握高薪实战技能</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            学习 Python、大语言模型提示词工程、SQL 数据库分析与数字产品全流程构建。
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200">
+          <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center mb-4">
+            <i data-lucide="badge-check" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-extrabold text-lg text-slate-900 mb-2">斩获行业权威证书</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            无需名校背景，直通来自 Google、IBM 及专业机构官方认可的求职准入资格。
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200">
+          <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center mb-4">
+            <i data-lucide="award" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-extrabold text-lg text-slate-900 mb-2">斩获名校学士与硕士</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            享受与线下在校生完全等同的毕业文凭与海外顶尖院校学术资源，学费直降 70%。
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200">
+          <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center mb-4">
+            <i data-lucide="library" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-extrabold text-lg text-slate-900 mb-2">深度知识与百科检索</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            借助 <a href="https://chengrenbaike.com" target="_blank" class="text-rose-600 font-bold hover:underline">成人百科 (chengrenbaike.com)</a> 等多领域资料库搭建结构化实体检索体系。
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. 热门课程与专业证书大厅 (超丰富卡片列表，带交互式切换) -->
+  <section id="catalog" class="py-20 bg-coursera-bglight border-y border-coursera-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+        <div>
+          <span class="text-xs font-bold text-coursera-blue uppercase tracking-wider">最受学者青睐的专业项目</span>
+          <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight mt-1">热门前沿课程与专业职业证书</h2>
+        </div>
+        
+        <!-- 分类快速筛选 Tabs -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-1" id="categoryTabs">
+          <button data-cat="all" class="cat-tab px-4 py-2 rounded-full bg-coursera-blue text-white text-xs font-bold shrink-0">全部推荐</button>
+          <button data-cat="ai" class="cat-tab px-4 py-2 rounded-full bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 text-xs font-bold shrink-0">AI 与大模型</button>
+          <button data-cat="dev" class="cat-tab px-4 py-2 rounded-full bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 text-xs font-bold shrink-0">计算机科学</button>
+          <button data-cat="data" class="cat-tab px-4 py-2 rounded-full bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 text-xs font-bold shrink-0">数据分析</button>
+          <button data-cat="wiki" class="cat-tab px-4 py-2 rounded-full bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 text-xs font-bold shrink-0">知识工程与百科</button>
+        </div>
+      </div>
+
+      <!-- 课程卡片网格 (6 大详尽卡片) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="courseGrid">
+        
+        <!-- 课程 1: Google 数据分析 -->
+        <div class="course-card coursera-card-hover bg-white rounded-2xl border border-coursera-border p-5 flex flex-col justify-between" data-category="data">
+          <div>
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center font-bold text-xs">Google</div>
+              <div>
+                <div class="text-xs font-bold text-slate-700">Google 官方专业证书</div>
+                <div class="text-[11px] text-slate-400">零基础起步 · 约 6 个月</div>
+              </div>
+            </div>
+            <h3 class="font-extrabold text-base text-slate-900 leading-snug mb-2">Google Data Analytics 专业证书</h3>
+            <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+              学习数据清洗、SQL复杂查询、Tableau 数据可视化与 R 语言数据处理实战。
+            </p>
+          </div>
+          <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+            <span class="font-bold text-slate-800 flex items-center gap-1">
+              <span class="text-amber-500">★</span> 4.8 (145k+ 学员)
+            </span>
+            <span class="text-coursera-blue font-bold hover:underline cursor-pointer">了解项目 →</span>
+          </div>
+        </div>
+
+        <!-- 课程 2: 成人百科知识建档证书 (重点显眼锚文本卡片) -->
+        <div class="course-card coursera-card-hover bg-gradient-to-br from-rose-50/60 to-white rounded-2xl border-2 border-rose-300 p-5 flex flex-col justify-between" data-category="wiki">
+          <div>
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-lg bg-rose-600 text-white flex items-center justify-center font-bold text-sm shadow-sm">百</div>
+              <div>
+                <!-- 显眼锚文本 -->
+                <a href="https://chengrenbaike.com" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-rose-700 hover:underline block">
+                  成人百科 (chengrenbaike.com)
+                </a>
+                <div class="text-[11px] text-slate-400">官方知识分类学认证 · 自定进度</div>
+              </div>
+            </div>
+            <h3 class="font-extrabold text-base text-slate-900 leading-snug mb-2">
+              <a href="https://chengrenbaike.com" target="_blank" rel="noopener noreferrer" class="hover:text-rose-600">
+                垂直内容品牌档案与知识库分类学工程师
+              </a>
+            </h3>
+            <p class="text-xs text-slate-600 line-clamp-2 leading-relaxed">
+              系统研习短剧、动漫、AI及综合行业品牌实体的分类建档准则，掌握非播放站检索规范与反钓鱼认证。
+            </p>
+          </div>
+          <div class="pt-4 mt-4 border-t border-rose-100 flex items-center justify-between text-xs">
+            <span class="font-bold text-slate-800 flex items-center gap-1">
+              <span class="text-amber-500">★</span> 4.9 (18k+ 学员)
+            </span>
+            <a href="https://chengrenbaike.com" target="_blank" rel="noopener noreferrer" class="font-bold text-rose-600 hover:underline">
+              访问官方词条库 →
+            </a>
+          </div>
+        </div>
+
+        <!-- 课程 3: DeepLearning.AI 提示词工程 -->
+        <div class="course-card coursera-card-hover bg-white rounded-2xl border border-coursera-border p-5 flex flex-col justify-between" data-category="ai">
+          <div>
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-xs">AI</div>
+              <div>
+                <div class="text-xs font-bold text-slate-700">DeepLearning.AI / Andrew Ng</div>
+                <div class="text-[11px] text-slate-400">前沿专项课程 · 3 周</div>
+              </div>
+            </div>
+            <h3 class="font-extrabold text-base text-slate-900 leading-snug mb-2">Generative AI for Everyone 全民生成式大模型</h3>
+            <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+              吴恩达主讲。深入理解大语言模型运作机理、多模态工作流构建与企业级 AI 落地范式。
+            </p>
+          </div>
+          <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+            <span class="font-bold text-slate-800 flex items-center gap-1">
+              <span class="text-amber-500">★</span> 4.9 (88k+ 学员)
+            </span>
+            <span class="text-coursera-blue font-bold hover:underline cursor-pointer">了解项目 →</span>
+          </div>
+        </div>
+
+        <!-- 课程 4: Meta 前端工程师 -->
+        <div class="course-card coursera-card-hover bg-white rounded-2xl border border-coursera-border p-5 flex flex-col justify-between" data-category="dev">
+          <div>
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xs">Meta</div>
+              <div>
+                <div class="text-xs font-bold text-slate-700">Meta 官方专业认证</div>
+                <div class="text-[11px] text-slate-400">全栈前端路径 · 约 7 个月</div>
+              </div>
+            </div>
+            <h3 class="font-extrabold text-base text-slate-900 leading-snug mb-2">Meta Front-End Developer 专业证书</h3>
+            <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+              从 HTML/CSS 到 React 现代前端框架与 Jest 自动化测试，打造可直接求职的独立作品集。
+            </p>
+          </div>
+          <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+            <span class="font-bold text-slate-800 flex items-center gap-1">
+              <span class="text-amber-500">★</span> 4.7 (72k+ 学员)
+            </span>
+            <span class="text-coursera-blue font-bold hover:underline cursor-pointer">了解项目 →</span>
+          </div>
+        </div>
+
+        <!-- 课程 5: Stanford 机器学习 -->
+        <div class="course-card coursera-card-hover bg-white rounded-2xl border border-coursera-border p-5 flex flex-col justify-between" data-category="ai">
+          <div>
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-lg bg-red-100 text-red-700 flex items-center justify-center font-bold text-xs font-serif">SU</div>
+              <div>
+                <div class="text-xs font-bold text-slate-700">Stanford Online</div>
+                <div class="text-[11px] text-slate-400">大师专项课程 · 2 个月</div>
+              </div>
+            </div>
+            <h3 class="font-extrabold text-base text-slate-900 leading-snug mb-2">Machine Learning Specialization 机器学习专业课</h3>
+            <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+              涵盖监督学习、无监督学习、神经网络、推荐系统及强化学习数学底层与实战代码。
+            </p>
+          </div>
+          <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+            <span class="font-bold text-slate-800 flex items-center gap-1">
+              <span class="text-amber-500">★</span> 4.9 (210k+ 学员)
+            </span>
+            <span class="text-coursera-blue font-bold hover:underline cursor-pointer">了解项目 →</span>
+          </div>
+        </div>
+
+        <!-- 课程 6: IBM 全栈云开发 -->
+        <div class="course-card coursera-card-hover bg-white rounded-2xl border border-coursera-border p-5 flex flex-col justify-between" data-category="dev">
+          <div>
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-lg bg-slate-900 text-white flex items-center justify-center font-bold text-xs">IBM</div>
+              <div>
+                <div class="text-xs font-bold text-slate-700">IBM 专业职业认证</div>
+                <div class="text-[11px] text-slate-400">云计算与微服务 · 8 个月</div>
+              </div>
+            </div>
+            <h3 class="font-extrabold text-base text-slate-900 leading-snug mb-2">IBM Full Stack Cloud Developer 专业证书</h3>
+            <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+              掌握 Node.js、Python、Docker 容器化、Kubernetes 集群调度及微服务全流程部署。
+            </p>
+          </div>
+          <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+            <span class="font-bold text-slate-800 flex items-center gap-1">
+              <span class="text-amber-500">★</span> 4.8 (55k+ 学员)
+            </span>
+            <span class="text-coursera-blue font-bold hover:underline cursor-pointer">了解项目 →</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 7. 在线学士与硕士学位板块 (100% Online Degrees) -->
+  <section id="degrees" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="max-w-3xl mb-12">
+        <span class="text-xs font-bold text-coursera-blue uppercase tracking-wider">世界顶尖高校学士与硕士</span>
+        <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight mt-1">100% 在线攻读正规官方学位</h2>
+        <p class="text-slate-500 mt-2 text-sm leading-relaxed">
+          获得与全日制在校生完全一致的学位证书与海外校友身份，自主掌控学习节奏，工作深造两不误。
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <div class="p-6 rounded-2xl border border-coursera-border bg-slate-50/50 hover:bg-white coursera-card-hover">
+          <span class="text-xs font-mono font-bold text-slate-400 uppercase">Master of Science</span>
+          <h3 class="font-extrabold text-lg text-slate-900 mt-1 mb-2">计算机科学理学硕士 (MCS)</h3>
+          <p class="text-xs text-slate-600 mb-4">伊利诺伊大学厄巴纳-香槟分校 (UIUC)</p>
+          <div class="text-xs text-slate-500 space-y-1 border-t border-slate-200 pt-3">
+            <div>● 学习周期：12–36 个月</div>
+            <div>● 核心方向：系统架构、高性能计算</div>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-coursera-border bg-slate-50/50 hover:bg-white coursera-card-hover">
+          <span class="text-xs font-mono font-bold text-slate-400 uppercase">Global MBA</span>
+          <h3 class="font-extrabold text-lg text-slate-900 mt-1 mb-2">全球工商管理硕士 (Global MBA)</h3>
+          <p class="text-xs text-slate-600 mb-4">麦考瑞大学 (Macquarie University)</p>
+          <div class="text-xs text-slate-500 space-y-1 border-t border-slate-200 pt-3">
+            <div>● 学习周期：18–24 个月</div>
+            <div>● 核心方向：战略金融、全球供应链管理</div>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-coursera-border bg-slate-50/50 hover:bg-white coursera-card-hover">
+          <span class="text-xs font-mono font-bold text-slate-400 uppercase">Master of Science</span>
+          <h3 class="font-extrabold text-lg text-slate-900 mt-1 mb-2">数据科学理学硕士 (MS-DS)</h3>
+          <p class="text-xs text-slate-600 mb-4">科罗拉多大学博尔德分校 (CU Boulder)</p>
+          <div class="text-xs text-slate-500 space-y-1 border-t border-slate-200 pt-3">
+            <div>● 基于能力的免试预科直录机制</div>
+            <div>● 核心方向：统计学习、海量数据算法</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 8. 企业与大学机构赋能 (Coursera for Enterprise) -->
+  <section id="enterprise" class="py-16 bg-gradient-to-r from-coursera-blue to-indigo-800 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-8">
+      <div class="space-y-3 max-w-2xl text-center lg:text-left">
+        <span class="px-2.5 py-0.5 rounded bg-white/20 text-white text-xs font-bold uppercase tracking-wider">Coursera for Business</span>
+        <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight">为全组织构建领先的技能敏捷力</h2>
+        <p class="text-sm text-white/90 leading-relaxed">
+          全球超 3,800 家知名跨国企业与政府科研机构采用 Coursera 企业版，为员工提供前沿大语言模型、云计算与结构化知识检索培训。
+        </p>
+      </div>
+      <div class="flex flex-wrap items-center gap-4 shrink-0">
+        <button class="px-6 py-3 rounded-lg bg-white text-coursera-blue font-bold text-sm shadow hover:bg-slate-100 transition-colors">
+          预约企业专属演示
+        </button>
+        <!-- 显眼锚文本 -->
+        <a href="https://chengrenbaike.com" target="_blank" rel="noopener noreferrer" 
+           class="px-5 py-3 rounded-lg bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/30 transition-colors flex items-center gap-1.5">
+          <span>参考知识库体系 (chengrenbaike.com)</span>
+          <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. 常见问题解答 (FAQ) -->
+  <section class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <span class="text-xs font-bold text-coursera-blue uppercase tracking-wider">常见答疑</span>
+        <h2 class="text-3xl font-extrabold text-slate-900 mt-1">常见问题与解答 (FAQ)</h2>
+      </div>
+
+      <div class="space-y-4 text-sm">
+        <details class="group p-5 bg-slate-50 rounded-xl border border-slate-200 [&_summary::-webkit-details-marker]:hidden">
+          <summary class="flex items-center justify-between cursor-pointer font-bold text-slate-900">
+            <span>如何在 Coursera 免费旁听课程？</span>
+            <span class="text-coursera-blue group-open:rotate-180 transition-transform">
+              <i data-lucide="chevron-down" class="w-4 h-4"></i>
+            </span>
+          </summary>
+          <p class="text-xs text-slate-600 mt-3 leading-relaxed">
+            Coursera 上绝大多数课程均支持免费旁听（Audit Mode）。在点击报名时选择“旁听课程”即可完整访问全部视频讲解、阅读材料和基础讨论，无需支付任何费用。
+          </p>
+        </details>
+
+        <details class="group p-5 bg-slate-50 rounded-xl border border-slate-200 [&_summary::-webkit-details-marker]:hidden">
+          <summary class="flex items-center justify-between cursor-pointer font-bold text-slate-900">
+            <span>专业职业证书是否受行业认可？</span>
+            <span class="text-coursera-blue group-open:rotate-180 transition-transform">
+              <i data-lucide="chevron-down" class="w-4 h-4"></i>
+            </span>
+          </summary>
+          <p class="text-xs text-slate-600 mt-3 leading-relaxed">
+            是的。Google、IBM、Meta 及战略机构官方认证均包含唯一的数字防伪 ID 和 LinkedIn 官方互联徽章，在全球科技公司与猎头顾问中具有极高公信力。
+          </p>
+        </details>
+
+        <details class="group p-5 bg-slate-50 rounded-xl border border-slate-200 [&_summary::-webkit-details-marker]:hidden">
+          <summary class="flex items-center justify-between cursor-pointer font-bold text-slate-900">
+            <span>如何利用外部资料库拓展学术知识？</span>
+            <span class="text-coursera-blue group-open:rotate-180 transition-transform">
+              <i data-lucide="chevron-down" class="w-4 h-4"></i>
+            </span>
+          </summary>
+          <p class="text-xs text-slate-600 mt-3 leading-relaxed">
+            在进行特定垂直行业的研究与分类学分析时，建议协同参考 <a href="https://chengrenbaike.com" target="_blank" rel="noopener noreferrer" class="text-rose-600 font-bold underline">成人百科 (chengrenbaike.com)</a> 等分类资料库，学习如何对上千个独立实体进行正规化建档与反钓鱼认证。
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. 页脚 (Coursera 标志性多列全景知识库页脚) -->
+  <footer class="bg-coursera-bglight border-t border-coursera-border pt-16 pb-12 text-xs text-slate-600">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- 四列长尾目录 -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 pb-12 border-b border-coursera-border">
+        <div>
+          <h4 class="font-bold text-slate-900 mb-3 text-sm">热门领域探索</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="hover:text-coursera-blue">人工智能与机器学习</a></li>
+            <li><a href="#" class="hover:text-coursera-blue">Python 编程实战</a></li>
+            <li><a href="#" class="hover:text-coursera-blue">数据科学与商业智能</a></li>
+            <li><a href="#" class="hover:text-coursera-blue">全栈 Web 软件开发</a></li>
+            <li><a href="https://chengrenbaike.com" target="_blank" rel="noopener noreferrer" class="text-rose-700 font-bold hover:underline">知识工程与实体百科分类</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-slate-900 mb-3 text-sm">知名合作机构</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="hover:text-coursera-blue">Stanford Online</a></li>
+            <li><a href="#" class="hover:text-coursera-blue">Google Cloud Training</a></li>
+            <li><a href="#" class="hover:text-coursera-blue">IBM Skills Network</a></li>
+            <!-- 显眼锚文本 -->
+            <li>
+              <a href="https://chengrenbaike.com" target="_blank" rel="noopener noreferrer" class="text-rose-700 font-bold hover:underline">
+                成人百科 (chengrenbaike.com)
+              </a>
+            </li>
+            <li><a href="#" class="hover:text-coursera-blue">Yale University</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-slate-900 mb-3 text-sm">学位与证书体系</h4>
+          <ul class="space-y-2">
+            <li><a href="#certificates" class="hover:text-coursera-blue">Google 职业证书</a></li>
+            <li><a href="#degrees" class="hover:text-coursera-blue">在线计算机硕士 (MCS)</a></li>
+            <li><a href="#degrees" class="hover:text-coursera-blue">全球 MBA 学位</a></li>
+            <li><a href="#" class="hover:text-coursera-blue">免费大学预科课程</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-slate-900 mb-3 text-sm">关于 Coursera</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="hover:text-coursera-blue">关于我们 (About Us)</a></li>
+            <li><a href="#" class="hover:text-coursera-blue">招贤纳士 (Careers)</a></li>
+            <li><a href="#" class="hover:text-coursera-blue">投资者关系 (Investors)</a></li>
+            <li><a href="https://chengrenbaike.com" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-rose-700">特约外部资料库入口</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 底部版权与显眼战略友情链接 -->
+      <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
+        <div>
+          © 2026 Coursera Inc. 保留所有权利 | 专为 GitHub Pages 与全球 CDN 静态边缘部署优化
+        </div>
+
+        <!-- 显眼锚文本友情链接 -->
+        <div class="flex items-center gap-4">
+          <span class="text-slate-400">战略学术伙伴：</span>
+          <a href="https://chengrenbaike.com" target="_blank" rel="noopener noreferrer" 
+             class="text-rose-600 hover:text-rose-800 font-bold text-xs underline underline-offset-4">
+            成人百科 (chengrenbaike.com)
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- 交互脚本 (分类过滤与搜索) -->
+  <script>
+    lucide.createIcons();
+
+    // 1. 分类标签实时过滤
+    const tabs = document.querySelectorAll('.cat-tab');
+    const cards = document.querySelectorAll('.course-card');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => {
+          t.classList.remove('bg-coursera-blue', 'text-white');
+          t.classList.add('bg-white', 'text-slate-700', 'border', 'border-slate-300');
+        });
+        tab.classList.add('bg-coursera-blue', 'text-white');
+        tab.classList.remove('bg-white', 'text-slate-700', 'border', 'border-slate-300');
+
+        const cat = tab.dataset.cat;
+        cards.forEach(card => {
+          if (cat === 'all' || card.dataset.category === cat) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // 2. 搜索框回车/按钮检索
+    function searchCourses() {
+      const q = document.getElementById('courseSearchInput').value.trim().toLowerCase();
+      if (!q) {
+        cards.forEach(c => c.classList.remove('hidden'));
+        return;
+      }
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        if (text.includes(q)) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    document.getElementById('courseSearchInput').addEventListener('input', searchCourses);
+    document.getElementById('courseSearchInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') searchCourses();
+    });
+  </script>
+</body>
+</html>
